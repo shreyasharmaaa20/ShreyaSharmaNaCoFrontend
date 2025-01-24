@@ -4,19 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Portfolio</title>
-  <link rel="stylesheet" href="Assets/Css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <!--navbar-->
-    <nav class="navbar">
-        <div class="navbar-brand">Portfolio</div>
-        <ul class="navbar-menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+  <nav class="navbar">
+    <div class="navbar-brand">My Portfolio</div>
+    <button class="navbar-toggler" id="toggler">
+        ☰
+    </button>
+    <ul class="navbar-menu" id="menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
 
   <div class="outer-box">
     <div class="box">
@@ -24,15 +26,16 @@
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim nulla
         consectetur molestias nam accusantium repellat, atque quas ipsum
-        dolor eveniet sunt iure magni eligendi.
-      </p>
+        dolor eveniet sunt iure magni eligendi.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim nulla
+        consectetur molestias nam accusantium repellat, atque quas ipsum
+        dolor eveniet sunt iure magni eligendi.</p>
     </div>
 
     <!--personal details-->
     <div class="box">
       <h3>Personal Details</h3>
-      <img src="Assets/Images/person.jpg" alt="Avatar">
-      <h5>SHREYA SHARMA</h5>
+      <img src="assets/images/person.jpg" alt="Avatar">
+      <h4>SHREYA SHARMA</h4>
       <div class="flex-row">
         <div>
           <h5>Title</h5>
@@ -50,6 +53,7 @@
         </div>
       </div>
     </div>
+
     <!--personal content-->
     <div class="box">
       <h3>Personal Content</h3>
@@ -87,12 +91,13 @@
         </div>
       </div>
     </div>
-<!--projects-->
+    <!--projects-->
     <div class="box">
       <h3>Projects</h3>
       <div class="content-box"></div>
       <div class="content-box"></div>
     </div>
   </div>
+  <script src="script.js"></script>
 </body>
 </html>
