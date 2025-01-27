@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive To-Do List</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- Main heading of the page -->
+  <h1>TO-DO LIST</h1>
+  <div class="container">
+
+    <!-- Input container for adding and removing items -->
+    <div class="input-container">
+      <input type="text" id="taskInput" placeholder="Name of the Item">
+      <button id="addItem">ADD ITEM</button>
+      <button id="remove">REMOVE ITEM</button>
+    </div>
+    <hr>
+    <div class="lists">
+      <!-- Box for the To-Do List -->
+      <div class="list-box" id="todoList">
+        <h3>To-Do List</h3>
+        <ul></ul>
+      </div>
+      <div class="button-group">
+        <button id="moveRight"> MOVE TO RIGHT </button>
+        <button id="moveLeft"> MOVE TO LEFT</button>
+      </div>
+
+       <!-- Box for the Complete List -->
+      <div class="list-box" id="completeList">
+        <h3>Complete List</h3>
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+  <script src="assets/javascript/script.js"></script>
+</body>
+</html>
