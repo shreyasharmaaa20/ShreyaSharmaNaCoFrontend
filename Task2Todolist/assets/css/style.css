@@ -1,0 +1,123 @@
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+/* Header styling */
+h1 {
+  font-size: 2rem;
+  color: #6a5acd;
+  margin: 20px 0;
+}
+
+/* Container styling */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: black;
+}
+
+/* Input container styling */
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-color: black;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button styling */
+button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #5346cc;
+  color: #fff;
+}
+
+button#remove {
+  background-color: #fd0f0f; /* Red background */
+}
+
+/* Lists container styling */
+.lists {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Styling for each list box */
+.list-box {
+  flex: 1;
+  max-width: 40%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Button group styling */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Media query for smaller screens (max-width: 600px) */
+@media screen and (max-width: 600px) {
+  .input-container {
+    flex-direction: column;
+    gap: 15px; /* Adds gap between the elements */
+  }
+
+  .lists {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .list-box {
+    max-width: 100%; /* Allows list boxes to take full width */
+  }
+
+  .button-group {
+    flex-direction: column; /* Ensures buttons stack vertically */
+    justify-content: center;
+    gap: 15px; /* Adds space between the buttons */
+  }
+}
