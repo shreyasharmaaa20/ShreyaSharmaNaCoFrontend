@@ -1,70 +1,103 @@
-const taskInput = document.getElementById("taskInput");
-const addItem = document.getElementById("addItem");
-const moveRight = document.getElementById("moveRight");
-const moveLeft = document.getElementById("moveLeft");
-const remove = document.getElementById("remove");
-const todoList = document.querySelector("#todoList ul");
-const completeList = document.querySelector("#completeList ul");
+const addItemButton = document.getElementById("add");
+const removeItemButton = document.getElementById("remove");
+const moveToRightButton = document.getElementById("moveToRight"); // Becomes "Move Up" on small screens
+const moveToLeftButton = document.getElementById("moveToLeft");  // Becomes "Move Down" on small screens
 
-let selectedTask = null;
+const itemInput = document.getElementById("item");
+const toDoList = document.getElementById("toDoList");
+const completeList = document.getElementById("completeList");
+const toaster = document.getElementById("toaster");
 
-// Add item to the To-Do list
-addItem.addEventListener("click", () => {
-  if (taskInput.value.trim() === "") return;
+function showToast(message) {
+  toaster.textContent = message;
+  setTimeout(() => {
+    toaster.textContent = "";
+  }, 2000);
+}
 
-  const li = document.createElement("li");
-  li.textContent = taskInput.value;
-  li.addEventListener("click", () => {
-    selectTask(li);
+// Helper to check if an item already exists in the list
+function itemExists(list, itemName) {
+  return Array.from(list.children).some((item) => item.textContent === itemName);
+}
+
+// Add item
+addItemButton.addEventListener("click", () => {
+  const itemName = itemInput.value.trim();
+  if (itemName === "") {
+    showToast("Item name cannot be empty!");
+    return;
+  }
+  if (itemExists(toDoList, itemName)) {
+    showToast("Duplicate items are not allowed!");
+    return;
+  }
+  const listItem = document.createElement("li");
+  listItem.textContent = itemName;
+
+  // Add toggle selection behavior
+  listItem.addEventListener("click", () => {
+    listItem.classList.toggle("selected");
   });
-  todoList.appendChild(li);
-  taskInput.value = "";
+
+  toDoList.appendChild(listItem);
+  itemInput.value = "";
 });
 
-// Select a task
-function selectTask(task) {
-  if (selectedTask) selectedTask.style.backgroundColor = "";
-  selectedTask = task;
-  selectedTask.style.backgroundColor = "#f0f0f0";
+// Remove selected items
+removeItemButton.addEventListener("click", () => {
+  const selectedItems = toDoList.querySelectorAll(".selected");
+  if (selectedItems.length === 0) {
+    showToast("No items selected for removal!");
+    return;
+  }
+  selectedItems.forEach((item) => toDoList.removeChild(item));
+});
+
+// Move selected items to Completed List (Move Down)
+function moveDown() {
+  const selectedItems = toDoList.querySelectorAll(".selected");
+  if (selectedItems.length === 0) {
+    showToast("No items selected to move to Completed List!");
+    return;
+  }
+  selectedItems.forEach((item) => {
+    item.classList.remove("selected");
+    completeList.appendChild(item);
+  });
 }
 
-// Move selected task to Complete List
-moveRight.addEventListener("click", () => {
-  if (selectedTask && todoList.contains(selectedTask)) {
-    completeList.appendChild(selectedTask);
-    selectedTask.style.backgroundColor = "";
-    selectedTask = null;
+// Move selected items to To-Do List (Move Up)
+function moveUp() {
+  const selectedItems = completeList.querySelectorAll(".selected");
+  if (selectedItems.length === 0) {
+    showToast("No items selected to move to To-Do List!");
+    return;
   }
-});
+  selectedItems.forEach((item) => {
+    item.classList.remove("selected");
+    toDoList.appendChild(item);
+  });
+}
 
-// Move selected task back to To-Do List
-moveLeft.addEventListener("click", () => {
-  if (selectedTask && completeList.contains(selectedTask)) {
-    todoList.appendChild(selectedTask);
-    selectedTask.style.backgroundColor = "";
-    selectedTask = null;
-  }
-});
-
-// Remove the selected task
-remove.addEventListener("click", () => {
-  if (selectedTask) {
-    selectedTask.remove();
-    selectedTask = null;
-  }
-});
-
-// Dynamically update button text based on screen size
+// Dynamic button label updates based on screen size
 function updateButtonLabels() {
-  if (window.innerWidth <= 600) {
-    moveRight.textContent = "MOVE DOWN";
-    moveLeft.textContent = "MOVE UP";
+  if (window.innerWidth <= 768) {
+    moveToRightButton.innerHTML = "<p>MOVE UP</p>";
+    moveToLeftButton.innerHTML = "<p>MOVE DOWN</p>";
+    moveToRightButton.removeEventListener("click", moveDown); // Ensure no duplicates
+    moveToLeftButton.removeEventListener("click", moveUp);
+    moveToRightButton.addEventListener("click", moveUp); // Reassign for small screens
+    moveToLeftButton.addEventListener("click", moveDown);
   } else {
-    moveRight.textContent = "MOVE TO RIGHT ";
-    moveLeft.textContent = " MOVE TO LEFT";
+    moveToRightButton.innerHTML = "<p>MOVE TO RIGHT</p>";
+    moveToLeftButton.innerHTML = "<p>MOVE TO LEFT</p>";
+    moveToRightButton.removeEventListener("click", moveUp); // Revert to large screen behavior
+    moveToLeftButton.removeEventListener("click", moveDown);
+    moveToRightButton.addEventListener("click", moveDown);
+    moveToLeftButton.addEventListener("click", moveUp);
   }
 }
 
-// Initial update and add event listener for resizing
-updateButtonLabels();
+// Update button labels on page load and window resize
+window.addEventListener("load", updateButtonLabels);
 window.addEventListener("resize", updateButtonLabels);
