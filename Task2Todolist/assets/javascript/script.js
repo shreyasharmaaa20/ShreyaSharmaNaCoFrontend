@@ -70,7 +70,7 @@ function removeItem() {
 function moveItems(fromList, toList) {
   const selectedItems = fromList.querySelectorAll(".selected");
   if (selectedItems.length === 0) {
-    showToast(`No items selected to move to ${toList === completeList ? "Completed List" : "To-Do List"}!`);
+    showToast("wrong item selected");
     return;
   }
   selectedItems.forEach(item => {
