@@ -3,39 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive To-Do List</title>
+  <title>To-Do List</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <!-- Main heading of the page -->
-  <h1>TO-DO LIST</h1>
+  <!-- Main container for the To-Do List application -->
   <div class="container">
+    <!-- Heading for the page -->
+    <h1>TO-DO LIST</h1>
 
-    <!-- Input container for adding and removing items -->
-    <div class="input-container">
-      <input type="text" id="taskInput" placeholder="Name of the Item">
-      <button id="addItem">ADD ITEM</button>
+    <!-- Header section with input field and buttons -->
+    <div class="header">
+      <input type="text" id="item" placeholder="Name of the Item">
+
+       <!-- Button to add an item to the To-Do List -->
+      <button id="add">ADD ITEM</button>
+
+      <!-- Button to remove the selected item from the To-Do List -->
       <button id="remove">REMOVE ITEM</button>
     </div>
     <hr>
-    <div class="lists">
-      <!-- Box for the To-Do List -->
-      <div class="list-box" id="todoList">
-        <h3>To-Do List</h3>
-        <ul></ul>
-      </div>
-      <div class="button-group">
-        <button id="moveRight"> MOVE TO RIGHT </button>
-        <button id="moveLeft"> MOVE TO LEFT</button>
+    <div class="list">
+      <div class="list1">
+        <h2>To-Do List</h2>
+        <ul id="toDoList"></ul>
       </div>
 
-       <!-- Box for the Complete List -->
-      <div class="list-box" id="completeList">
-        <h3>Complete List</h3>
-        <ul></ul>
+      <!-- Buttons to move items between the lists -->
+      <div class="buttons">
+        <button id="moveToRight"><p>MOVE TO RIGHT </p></button>
+        <button id="moveToLeft"><p> MOVE TO LEFT</p></button>
+      </div>
+      <div class="list2">
+        <h2>Complete List</h2>
+        <ul id="completeList"></ul>
       </div>
     </div>
   </div>
+
+  <!-- Toaster notification for alerts or feedback -->
+  <div id="toaster"></div>
   <script src="assets/javascript/script.js"></script>
 </body>
 </html>
