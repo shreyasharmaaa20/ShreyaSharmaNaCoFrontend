@@ -1,13 +1,16 @@
 const addItemButton = document.getElementById("add");
 const removeItemButton = document.getElementById("remove");
-const moveToRightButton = document.getElementById("moveToRight"); // Becomes "Move Up" on small screens
-const moveToLeftButton = document.getElementById("moveToLeft");  // Becomes "Move Down" on small screens
+const moveToRightButton = document.getElementById("moveToRight");
+const moveToLeftButton = document.getElementById("moveToLeft");
 
 const itemInput = document.getElementById("item");
 const toDoList = document.getElementById("toDoList");
 const completeList = document.getElementById("completeList");
 const toaster = document.getElementById("toaster");
 
+/* Utility Functions */
+
+// Show a toast message for user feedback
 function showToast(message) {
   toaster.textContent = message;
   setTimeout(() => {
@@ -15,88 +18,113 @@ function showToast(message) {
   }, 2000);
 }
 
-// Helper to check if an item already exists in the list
-function itemExists(list, itemName) {
-  return Array.from(list.children).some((item) => item.textContent === itemName);
+// Check if an item already exists in either the To-Do List or Completed List
+function itemExistsInBothLists(itemName) {
+  const allItems = [...toDoList.children, ...completeList.children];
+  return allItems.some(item => item.textContent === itemName);
 }
 
-// Add item
-addItemButton.addEventListener("click", () => {
-  const itemName = itemInput.value.trim();
-  if (itemName === "") {
-    showToast("Item name cannot be empty!");
-    return;
-  }
-  if (itemExists(toDoList, itemName)) {
-    showToast("Duplicate items are not allowed!");
-    return;
-  }
+// Create a new list item with toggle selection behavior
+function createListItem(itemName) {
   const listItem = document.createElement("li");
   listItem.textContent = itemName;
-
-  // Add toggle selection behavior
   listItem.addEventListener("click", () => {
     listItem.classList.toggle("selected");
   });
+  return listItem;
+}
 
+/* List Management Functions */
+
+// Add item to To-Do List
+function addItem() {
+  const itemName = itemInput.value.trim();
+  if (!itemName) {
+    showToast("Item name cannot be empty!");
+    return;
+  }
+  if (itemExistsInBothLists(itemName)) {
+    showToast("Duplicate item!");
+    return;
+  }
+  const listItem = createListItem(itemName);
   toDoList.appendChild(listItem);
   itemInput.value = "";
-});
+}
 
-// Remove selected items
-removeItemButton.addEventListener("click", () => {
-  const selectedItems = toDoList.querySelectorAll(".selected");
-  if (selectedItems.length === 0) {
+// Remove selected items from both To-Do and Completed Lists
+function removeItem() {
+  const selectedToDoItems = toDoList.querySelectorAll(".selected");
+  const selectedCompleteItems = completeList.querySelectorAll(".selected");
+
+  if (selectedToDoItems.length === 0 && selectedCompleteItems.length === 0) {
     showToast("No items selected for removal!");
     return;
   }
-  selectedItems.forEach((item) => toDoList.removeChild(item));
-});
 
-// Move selected items to Completed List (Move Down)
-function moveDown() {
-  const selectedItems = toDoList.querySelectorAll(".selected");
+  selectedToDoItems.forEach(item => toDoList.removeChild(item));
+  selectedCompleteItems.forEach(item => completeList.removeChild(item));
+}
+
+// Move selected items between lists (To-Do List ↔ Completed List)
+function moveItems(fromList, toList) {
+  const selectedItems = fromList.querySelectorAll(".selected");
   if (selectedItems.length === 0) {
-    showToast("No items selected to move to Completed List!");
+    showToast(`No items selected to move to ${toList === completeList ? "Completed List" : "To-Do List"}!`);
     return;
   }
-  selectedItems.forEach((item) => {
+  selectedItems.forEach(item => {
     item.classList.remove("selected");
-    completeList.appendChild(item);
+    toList.appendChild(item);
   });
 }
 
-// Move selected items to To-Do List (Move Up)
-function moveUp() {
-  const selectedItems = completeList.querySelectorAll(".selected");
-  if (selectedItems.length === 0) {
-    showToast("No items selected to move to To-Do List!");
-    return;
-  }
-  selectedItems.forEach((item) => {
-    item.classList.remove("selected");
-    toDoList.appendChild(item);
-  });
+/* Button Behavior Functions */
+
+// Move selected items to Completed List
+function moveToCompleted() {
+  moveItems(toDoList, completeList);
 }
 
-// Dynamic button label updates based on screen size
+// Move selected items to To-Do List
+function moveToToDo() {
+  moveItems(completeList, toDoList);
+}
+
+/* Dynamic Button Label Updates */
+
+// Update button labels based on screen size
 function updateButtonLabels() {
   if (window.innerWidth <= 768) {
     moveToRightButton.innerHTML = "<p>MOVE UP</p>";
     moveToLeftButton.innerHTML = "<p>MOVE DOWN</p>";
-    moveToRightButton.removeEventListener("click", moveDown); // Ensure no duplicates
-    moveToLeftButton.removeEventListener("click", moveUp);
-    moveToRightButton.addEventListener("click", moveUp); // Reassign for small screens
-    moveToLeftButton.addEventListener("click", moveDown);
+    moveToRightButton.removeEventListener("click", moveToCompleted); // Remove previous listener
+    moveToLeftButton.removeEventListener("click", moveToToDo);
+    moveToRightButton.addEventListener("click", moveToToDo); // Add listener for small screens
+    moveToLeftButton.addEventListener("click", moveToCompleted);
   } else {
     moveToRightButton.innerHTML = "<p>MOVE TO RIGHT</p>";
     moveToLeftButton.innerHTML = "<p>MOVE TO LEFT</p>";
-    moveToRightButton.removeEventListener("click", moveUp); // Revert to large screen behavior
-    moveToLeftButton.removeEventListener("click", moveDown);
-    moveToRightButton.addEventListener("click", moveDown);
-    moveToLeftButton.addEventListener("click", moveUp);
+    moveToRightButton.removeEventListener("click", moveToToDo); // Remove previous listener
+    moveToLeftButton.removeEventListener("click", moveToCompleted);
+    moveToRightButton.addEventListener("click", moveToCompleted); // Revert for large screens
+    moveToLeftButton.addEventListener("click", moveToToDo);
   }
 }
+
+/* Event Listeners */
+
+// Add item button click handler
+addItemButton.addEventListener("click", addItem);
+
+// Remove item button click handler
+removeItemButton.addEventListener("click", removeItem);
+
+// Move selected items to Completed List (Move Down) for larger screens
+moveToRightButton.addEventListener("click", moveToCompleted);
+
+// Move selected items to To-Do List (Move Up) for larger screens
+moveToLeftButton.addEventListener("click", moveToToDo);
 
 // Update button labels on page load and window resize
 window.addEventListener("load", updateButtonLabels);
