@@ -1,131 +1,127 @@
-const addItemButton = document.getElementById("add");
-const removeItemButton = document.getElementById("remove");
-const moveToRightButton = document.getElementById("moveToRight");
-const moveToLeftButton = document.getElementById("moveToLeft");
+// Selecting DOM elements
+const itemInput = document.getElementById('item');
+const addButton = document.getElementById('add');
+const removeButton = document.getElementById('remove');
+const toDoListElement = document.getElementById('toDoList');
+const completeListElement = document.getElementById('completeList');
+const moveRightButton = document.getElementById('moveToRight');
+const moveLeftButton = document.getElementById('moveToLeft');
+const toasterElement = document.getElementById('toaster');
 
-const itemInput = document.getElementById("item");
-const toDoList = document.getElementById("toDoList");
-const completeList = document.getElementById("completeList");
-const toaster = document.getElementById("toaster");
+// Variables for Undo functionality
+let lastRemovedItems = []; 
+let toasterTimeout;
 
-/* Utility Functions */
+// Setting up event listeners for buttons
+addButton.addEventListener('click', addItem);
+removeButton.addEventListener('click', removeSelectedItems);
+moveRightButton.addEventListener('click', moveToRight);
+moveLeftButton.addEventListener('click', moveToLeft);
 
-// Show a toast message for user feedback
-function showToast(message) {
-  toaster.textContent = message;
-  setTimeout(() => {
-    toaster.textContent = "";
-  }, 2000);
+// Function to display a toaster notification
+function showToast(message, undo = false) {
+  clearTimeout(toasterTimeout); 
+
+  toasterElement.innerHTML = message;
+  if (undo) {
+    const undoButton = document.createElement('button');
+    undoButton.textContent = 'Undo';
+    undoButton.addEventListener('click', undoLastAction);
+    toasterElement.appendChild(undoButton);
+  }
+
+  toasterElement.style.display = 'block';
+  toasterTimeout = setTimeout(() => {
+    toasterElement.style.display = 'none';
+  }, 5000); // Display for 5 seconds
 }
 
-// Check if an item already exists in either the To-Do List or Completed List
-function itemExistsInBothLists(itemName) {
-  const allItems = [...toDoList.children, ...completeList.children];
-  return allItems.some(item => item.textContent === itemName);
-}
-
-// Create a new list item with toggle selection behavior
-function createListItem(itemName) {
-  const listItem = document.createElement("li");
-  listItem.textContent = itemName;
-  listItem.addEventListener("click", () => {
-    listItem.classList.toggle("selected");
-  });
-  return listItem;
-}
-
-/* List Management Functions */
-
-// Add item to To-Do List
+// Function to add a new item to the To-Do List
 function addItem() {
   const itemName = itemInput.value.trim();
-  if (!itemName) {
-    showToast("Item name cannot be empty!");
-    return;
+  if (itemName === '') return showToast('Item name cannot be empty');
+
+  if (isDuplicate(itemName, toDoListElement) || isDuplicate(itemName, completeListElement)) {
+    return showToast('Item is a duplicate');
   }
-  if (itemExistsInBothLists(itemName)) {
-    showToast("Duplicate item!");
-    return;
-  }
-  const listItem = createListItem(itemName);
-  toDoList.appendChild(listItem);
-  itemInput.value = "";
+
+  const li = document.createElement('li');
+  li.textContent = itemName;
+  li.addEventListener('click', () => toggleSelection(li));
+  toDoListElement.appendChild(li);
+
+  itemInput.value = '';
+  showToast('Item added');
 }
 
-// Remove selected items from both To-Do and Completed Lists
-function removeItem() {
-  const selectedToDoItems = toDoList.querySelectorAll(".selected");
-  const selectedCompleteItems = completeList.querySelectorAll(".selected");
-
-  if (selectedToDoItems.length === 0 && selectedCompleteItems.length === 0) {
-    showToast("No items selected for removal!");
-    return;
-  }
-
-  selectedToDoItems.forEach(item => toDoList.removeChild(item));
-  selectedCompleteItems.forEach(item => completeList.removeChild(item));
+// Function to toggle selection state of a list item
+function toggleSelection(item) {
+  item.classList.toggle('selected');
 }
 
-// Move selected items between lists (To-Do List ↔ Completed List)
-function moveItems(fromList, toList) {
-  const selectedItems = fromList.querySelectorAll(".selected");
-  if (selectedItems.length === 0) {
-    showToast("wrong item selected");
-    return;
-  }
+// Function to move selected items from the To-Do List to the Complete List
+function moveToRight() {
+  const selectedItems = Array.from(toDoListElement.querySelectorAll('.selected'));
+  if (selectedItems.length === 0) return showToast('No items selected');
+
   selectedItems.forEach(item => {
-    item.classList.remove("selected");
-    toList.appendChild(item);
+    item.classList.remove('selected');
+    completeListElement.appendChild(item);
   });
+
+  showToast('Items moved to complete list');
 }
 
-/* Button Behavior Functions */
+// Function to move selected items back from the Complete List to the To-Do List
+function moveToLeft() {
+  const selectedItems = Array.from(completeListElement.querySelectorAll('.selected'));
+  if (selectedItems.length === 0) return showToast('No items selected');
 
-// Move selected items to Completed List
-function moveToCompleted() {
-  moveItems(toDoList, completeList);
+  selectedItems.forEach(item => {
+    item.classList.remove('selected');
+    toDoListElement.appendChild(item);
+  });
+
+  showToast('Items moved to To-Do list');
 }
 
-// Move selected items to To-Do List
-function moveToToDo() {
-  moveItems(completeList, toDoList);
-}
-
-/* Dynamic Button Label Updates */
-
-// Update button labels based on screen size
-function updateButtonLabels() {
-  if (window.innerWidth <= 768) {
-    moveToRightButton.innerHTML = "<p>MOVE UP</p>";
-    moveToLeftButton.innerHTML = "<p>MOVE DOWN</p>";
-    moveToRightButton.removeEventListener("click", moveToCompleted); // Remove previous listener
-    moveToLeftButton.removeEventListener("click", moveToToDo);
-    moveToRightButton.addEventListener("click", moveToToDo); // Add listener for small screens
-    moveToLeftButton.addEventListener("click", moveToCompleted);
-  } else {
-    moveToRightButton.innerHTML = "<p>MOVE TO RIGHT</p>";
-    moveToLeftButton.innerHTML = "<p>MOVE TO LEFT</p>";
-    moveToRightButton.removeEventListener("click", moveToToDo); // Remove previous listener
-    moveToLeftButton.removeEventListener("click", moveToCompleted);
-    moveToRightButton.addEventListener("click", moveToCompleted); // Revert for large screens
-    moveToLeftButton.addEventListener("click", moveToToDo);
+// Function to undo the most recent removal action
+function undoLastAction() {
+  if (lastRemovedItems.length === 0) {
+    return showToast('No action to undo');
   }
+
+  lastRemovedItems.forEach(({ item, parent }) => {
+    parent.appendChild(item);
+  });
+
+  lastRemovedItems = []; // Reset undo history
+  showToast('Undo successful');
 }
 
-/* Event Listeners */
+// Function to check if an item already exists in a given list
+function isDuplicate(itemName, list) {
+  return Array.from(list.children).some(item => item.textContent === itemName);
+}
 
-// Add item button click handler
-addItemButton.addEventListener("click", addItem);
+// Function to remove selected items from the lists
+function removeSelectedItems() {
+  const selectedItems = [
+    ...toDoListElement.querySelectorAll('.selected'),
+    ...completeListElement.querySelectorAll('.selected'),
+  ];
+  if (selectedItems.length === 0) return showToast('No items selected');
 
-// Remove item button click handler
-removeItemButton.addEventListener("click", removeItem);
+  // Store the removed items and their parent lists for possible undo
+  lastRemovedItems = selectedItems.map(item => ({
+    item,
+    parent: item.parentNode,
+  }));
 
-// Move selected items to Completed List (Move Down) for larger screens
-moveToRightButton.addEventListener("click", moveToCompleted);
+  selectedItems.forEach(item => item.remove());
 
-// Move selected items to To-Do List (Move Up) for larger screens
-moveToLeftButton.addEventListener("click", moveToToDo);
+  showToast('Items removed', true);
+}
 
-// Update button labels on page load and window resize
-window.addEventListener("load", updateButtonLabels);
-window.addEventListener("resize", updateButtonLabels);
+
+  
