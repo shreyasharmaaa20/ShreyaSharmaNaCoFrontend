@@ -128,16 +128,71 @@ button#remove {
   background-color: #fd0f0f; /* Red background set for remove button*/
 }
 
-/* Toaster notification styling */
+
+/* Toaster notification container */
 #toaster {
-  margin-top: 20px;
-  color: red;
-  font-weight: bold;
-  position: relative;
-  bottom: -20px;
-  text-align: center;
-  width: 100%;
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+/* Undo button inside the toaster */
+#toaster button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the Undo button */
+#toaster button:hover {
+  background-color: #0056b3;
+}
+
+#toaster .progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #007BFF;
+}
+
+#toaster .progress-animation {
+  animation: progress 5s linear forwards;
+}
+
+#moveToRight p {
+  display: block;
+}
+#moveToLeft p {
+  display: block;
+}
+
+/* Animation for progress bar */
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
 
 /* Responsive Styles for smaller screens*/
 @media (max-width: 768px) {
@@ -164,4 +219,23 @@ button#remove {
     position: static;
     margin-top: 10px;
   }
+
+  /* Change button text on small screens */
+  #moveToRight p {
+    display: none;
+  }
+  #moveToLeft p {
+    display: none;
+  }
+
+  /* New text for smaller screens */
+  #moveToRight::after {
+    content: 'Move Down'; /* Replaces "Move to Right" */
+  }
+  #moveToLeft::after {
+    content: 'Move Up'; /* Replaces "Move to Left" */
+  }
 }
+
+
+
