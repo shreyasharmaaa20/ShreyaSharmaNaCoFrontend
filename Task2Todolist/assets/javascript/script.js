@@ -1,4 +1,4 @@
-// Selecting DOM elements
+// Selecting DOM elements 
 const itemInput = document.getElementById('item');
 const addButton = document.getElementById('add');
 const removeButton = document.getElementById('remove');
@@ -6,11 +6,15 @@ const toDoListElement = document.getElementById('toDoList');
 const completeListElement = document.getElementById('completeList');
 const moveRightButton = document.getElementById('moveToRight');
 const moveLeftButton = document.getElementById('moveToLeft');
-const toasterElement = document.getElementById('toaster');
+const toasterContainer = document.createElement('div'); 
+
+// Set up a toaster container for multiple toasts
+toasterContainer.id = "toaster-container";
+document.body.appendChild(toasterContainer);
 
 // Variables for Undo functionality
 let lastRemovedItems = []; 
-let toasterTimeout;
+let toasterTimeouts = [];
 
 // Setting up event listeners for buttons
 addButton.addEventListener('click', addItem);
@@ -20,20 +24,30 @@ moveLeftButton.addEventListener('click', moveToLeft);
 
 // Function to display a toaster notification
 function showToast(message, undo = false) {
-  clearTimeout(toasterTimeout); 
+  if (!message.trim()) return; // Ensure no empty toaster appears
 
-  toasterElement.innerHTML = message;
+  const toast = document.createElement('div');
+  toast.classList.add('toast');
+  toast.textContent = message;
+
   if (undo) {
     const undoButton = document.createElement('button');
     undoButton.textContent = 'Undo';
     undoButton.addEventListener('click', undoLastAction);
-    toasterElement.appendChild(undoButton);
+    toast.appendChild(undoButton);
   }
+  
 
-  toasterElement.style.display = 'block';
-  toasterTimeout = setTimeout(() => {
-    toasterElement.style.display = 'none';
-  }, 5000); // Display for 5 seconds
+  // Append to the toaster container
+  const toasterContainer = document.getElementById('toaster-container');
+  toasterContainer.appendChild(toast);
+  
+  //remove toast
+  const timeout = setTimeout(() => {
+    toast.remove();
+  }, 5000); // Display each toast for 5 seconds
+
+  toasterTimeouts.push(timeout);
 }
 
 // Function to add a new item to the To-Do List
@@ -122,6 +136,3 @@ function removeSelectedItems() {
 
   showToast('Items removed', true);
 }
-
-
-  
