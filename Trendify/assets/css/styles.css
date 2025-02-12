@@ -1,0 +1,303 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #d3d3d3 !important; 
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #000 !important;
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f8b400 !important;
+}
+
+/* Hero Section */
+#hero {
+    background-color:rgb(234, 231, 231) !important; 
+    color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center; /* Align text and image vertically */
+    justify-content: center; /* Center them horizontally */
+    gap: 40px; /* Space between text and image */
+    padding: 80px 10%;
+    text-align: left;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content {
+    max-width: 50%;
+}
+
+#hero-container {
+    width: 100%;
+    background-color: #d3d3d3 !important; /* Light Grey */
+}
+
+.hero-btn {
+    background: #f8b400;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.hero-btn:hover {
+    background: #000;
+    color: white;
+}
+
+.hero-image {
+    max-width: 40%;
+    text-align: right;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+
+/* Category Section */
+#categories {
+    background-color: #d3d3d3 !important; /* Light Grey */
+    padding: 40px 0;
+    text-align: center;
+}
+
+#categories h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.btn-group {
+    margin-top: 10px;
+}
+
+.btn-group .btn {
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+/* Cart Icon */
+.navbar-nav .fa-shopping-cart {
+    font-size: 20px;
+    color: white;
+}
+
+.cart-count {
+    background: red;
+    color: white;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 3px 7px;
+    position: relative;
+    top: -10px;
+    left: -5px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    border: 1px solid #ddd;
+    height: 400px; /* Fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-img {
+    max-width: 100%;
+    height: 180px; /* Consistent image height */
+    object-fit: contain;
+}
+
+.product-card h3 {
+    font-size: 16px;
+    flex-grow: 1; /* Allows title to adjust */
+}
+
+.product-card p {
+    font-size: 14px;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f8b400;
+    margin: 10px 0;
+}
+
+.addToCart {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.addToCart:hover {
+    background-color: #f8b400;
+}
+
+
+/* Newsletter */
+#subscribe {
+    background: #d3d3d3 !important; /* Light Grey */
+    color: #000;
+    padding: 50px 0;
+    text-align: center;
+}
+
+#subscribe h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+#subscribe p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+/* Email Input Field */
+#subscribe input {
+    width: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #000 !important; /* Black border */
+    margin-top: 10px;
+}
+
+#subscribe button {
+    background: #f8b400;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#subscribe button:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Footer */
+#footer {
+    background: #222;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+
+@media (max-width: 992px) {
+    /* Navbar */
+    .navbar-nav {
+        text-align: center;
+    }
+
+    /* Hero Section */
+    #hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 50px 5%;
+    }
+
+    .hero-image {
+        max-width: 70%;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Categories */
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-group .btn {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-image {
+        max-width: 80%;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    /* Product Cards */
+    .col-md-4 {
+         width: 100%;
+    }
+    
+    #subscribe input {
+        width: 80%;
+    }
+
+    .col-md-4 {
+        width: 100%;
+    }
+}
