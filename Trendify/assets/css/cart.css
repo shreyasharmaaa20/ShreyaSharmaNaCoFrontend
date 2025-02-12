@@ -1,0 +1,102 @@
+/* Cart Page Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ffecd2, #bebdbd);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cart Container */
+.cart-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: linear-gradient(135deg, #ffffff, #f8f8f8);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+}
+
+.cart-container:hover {
+    transform: scale(1.02);
+}
+
+/* Cart Heading */
+.cart-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 26px;
+    color: #444;
+}
+
+/* Cart Table */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cart-table-header,
+.cart-table-data {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-table-header {
+    background-color: #343a40;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Alternate row background */
+.cart-table-body tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Row hover effect */
+.cart-table-body tr:hover {
+    background-color: #f1f1f1;
+    transition:  0.3s;
+}
+
+/* Remove button styling */
+.btn-remove {
+    background: linear-gradient(to right, #ff6a6a, #ff4757);
+    border: none;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    color: white;
+}
+
+.btn-remove:hover {
+    background: linear-gradient(to right, #ff4d4d, #e60000);
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cart-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .cart-table-header, 
+    .cart-table-data {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .cart-title {
+        font-size: 22px;
+    }
+}
