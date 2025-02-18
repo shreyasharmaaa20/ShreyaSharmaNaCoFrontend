@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {  
     fetch("https://fakestoreapi.com/products")
         .then(response => response.json())
         .then(data => {
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error fetching products:", error));
 
-        updateCartCount();
+    updateCartCount();
 });
 
 // Function to display products
@@ -28,8 +28,13 @@ function displayProducts(products) {
                 <h3>${product.title}</h3>
                 <p>${product.description.substring(0, 80)}...</p>
                 <div class="price">$${product.price}</div>
-                <button class="btn btn-success addToCart" onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Add to Cart</button>
+                <button class="btn btn-success addToCart">Add to Cart</button>
             </div>`;
+
+        // Attach event listener to the "Add to Cart" button
+        productCard.querySelector(".addToCart").addEventListener("click", function () {
+            addToCart(product.id, product.title, product.price);
+        });
 
         productList.appendChild(productCard);
     });
@@ -60,13 +65,41 @@ function setupCategoryFilter(products) {
 // Function to add items to cart
 function addToCart(id, title, price) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push({ id, title, price });
+
+    // Check if item already exists, if so, increase quantity
+    let existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ id, title, price, quantity: 1 });
+    }
+
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
+    showCartMessage("Item added to cart!");
 }
 
 // Function to update cart count
 function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     document.getElementById("cart-count").innerText = cart.length;
+}
+
+// Function to show cart message (toast notification)
+function showCartMessage(message) {
+    let toast = document.createElement("div");
+    toast.classList.add("toast-message");
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => {
+            toast.remove();
+        }, 500);
+    }, 3000);
 }
