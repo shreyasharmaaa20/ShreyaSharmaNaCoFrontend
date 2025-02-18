@@ -1,0 +1,142 @@
+/* Full Page Background */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #ffffff);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 850px;
+    width: 100%;
+}
+
+/* Left Section: Login */
+.login-section {
+    background: white;
+    padding: 40px;
+}
+
+.login-card h3 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+/* Login Button */
+.btn-login {
+    background-color: #000428;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px;
+    color: white;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #004e92;
+}
+
+/* OR Separator */
+.or-separator {
+    position: relative;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.or-separator::before,
+.or-separator::after {
+    content: "";
+    position: absolute;
+    width: 40%;
+    height: 1px;
+    background: #ddd;
+    top: 50%;
+}
+
+.or-separator::before {
+    left: 0;
+}
+
+.or-separator::after {
+    right: 0;
+}
+
+/* Social Login Buttons */
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.social-btn {
+    width: 48%;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.social-btn img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.google-btn {
+    background-color: #3b5998;
+    color: white;
+}
+
+.facebook-btn {
+    background-color: #3b5998;
+    color: white;
+}
+
+.social-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Right Section: Image */
+.image-section {
+    background: #e2f8ff; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-image {
+    max-width: 90%;
+    height: auto;
+}
