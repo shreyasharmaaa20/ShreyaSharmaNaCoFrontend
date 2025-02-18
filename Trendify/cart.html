@@ -15,16 +15,30 @@
         <table class="cart-table">
             <thead>
                 <tr>
-                    <th class="cart-table-header">Product</th>
-                    <th class="cart-table-header">Price</th>
-                    <th class="cart-table-header">Remove</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
-            <tbody id="cart-items" class="cart-table-body">
-                <!-- Cart items will be dynamically inserted here -->
+            <tbody id="cart-items">
+                <!-- Items will be added dynamically -->
             </tbody>
         </table>
     </div>
+
+     <!-- Single Container for Total Price & Button -->
+<div class="checkout-container">
+    <span class="total-price">Total: <span id="total-price">$0.00</span></span>
+    <button id="proceed-btn" class="proceed-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+</div>
+
+
+<div class="shopping-quote">
+    <p class="quote-text">"Happiness is not in money, but in shopping." Explore more at Trendify !</p>
+    <button onclick="location.href='index.html'" class="shop-button">Shop More</button>
+</div>
 
     <script src="assets/javascript/cart.js"></script>
 </body>
