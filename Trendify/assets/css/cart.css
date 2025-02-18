@@ -1,102 +1,188 @@
-/* Cart Page Styles */
+/* General styling for the cart page */
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #ffecd2, #bebdbd);
-    color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
 
-/* Cart Container */
-.cart-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: linear-gradient(135deg, #ffffff, #f8f8f8);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s;
-}
-
-.cart-container:hover {
-    transform: scale(1.02);
-}
-
-/* Cart Heading */
+/* Center the heading */
 .cart-title {
     text-align: center;
-    margin-bottom: 20px;
-    font-weight: 700;
-    font-size: 26px;
-    color: #444;
+    margin-top: 20px;
 }
 
-/* Cart Table */
+/* Style the cart container */
+.cart-container {
+    width: 80%;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Table styling */
 .cart-table {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
+    margin-top: 20px;
 }
 
-.cart-table-header,
-.cart-table-data {
-    padding: 14px;
+.cart-table th, .cart-table td {
+    padding: 12px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
-.cart-table-header {
-    background-color: #343a40;
+.cart-table th {
+    background-color: #007bff;
     color: white;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
 }
 
-/* Alternate row background */
-.cart-table-body tr:nth-child(odd) {
-    background-color: #f9f9f9;
+/* Quantity input styling */
+.quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Row hover effect */
-.cart-table-body tr:hover {
-    background-color: #f1f1f1;
-    transition:  0.3s;
+.quantity-btn {
+    background-color: #ddd;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.quantity-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    margin: 0 5px;
 }
 
 /* Remove button styling */
-.btn-remove {
-    background: linear-gradient(to right, #ff6a6a, #ff4757);
-    border: none;
-    padding: 8px 14px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease-in-out;
+.remove-btn {
+    background-color: #dc3545;
     color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
 }
 
-.btn-remove:hover {
-    background: linear-gradient(to right, #ff4d4d, #e60000);
-    transform: scale(1.05);
+.remove-btn:hover {
+    background-color: #c82333;
 }
+
+
+/* Checkout Container */
+.checkout-container {
+    max-width: 500px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    box-shadow: 0 3px 10px rgba(0, 128, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Forces elements to stack */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Total Price */
+.total-price {
+    font-size: 20px;
+    margin-bottom: 10px; /* Adds spacing between total price and button */
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Centering the Proceed Button */
+.proceed-btn {
+    width: 60%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background: linear-gradient(to right, #000000, #000000);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    display: block; /* Ensures button takes full width */
+    margin-top: 10px; /* Creates spacing from total price */
+}
+
+.shopping-quote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+
+/* Bold, Large, Centered Quote */
+.quote-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000; /* Change color if needed */
+    margin-top: 20px;
+}
+
+.shop-button {
+    background-color: black; /* Trendy pink shade */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Toast Notification */
+.toast-message {
+    position: fixed;
+    top: 20px;
+    right: -300px; /* Initially hidden */
+    background-color: #d32f2f;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: right 0.5s ease-in-out;
+}
+
+.toast-message.show {
+    right: 20px; /* Slides in */
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .cart-container {
-        width: 90%;
-        padding: 15px;
+        width: 95%;
     }
 
-    .cart-table-header, 
-    .cart-table-data {
-        padding: 10px;
-        font-size: 14px;
+    .cart-table th, .cart-table td {
+        padding: 8px;
     }
 
-    .cart-title {
-        font-size: 22px;
+    .quantity-input {
+        width: 30px;
     }
 }
