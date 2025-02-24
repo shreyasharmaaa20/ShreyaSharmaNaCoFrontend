@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
 
     if (loginForm) {
+          // event listener for form submission
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Dummy authentication (Replace with real authentication logic)
+            //  Temporary login check
             if (email === "user@example.com" && password === "password123") {
                 localStorage.setItem("user", JSON.stringify({ email }));
                 alert("Login successful!");
