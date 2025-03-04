@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.getElementById("back-to-home").addEventListener("click", () => {
-        window.location.href = "i.html";
+        window.location.href = "index.html";
     });
 });
 
