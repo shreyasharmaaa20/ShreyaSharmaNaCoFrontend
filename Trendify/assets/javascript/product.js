@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             })
             .catch(error => console.error("Error loading product:", error));
+        updateCartCount();
     }
 
     document.getElementById("back-to-home").addEventListener("click", () => {
