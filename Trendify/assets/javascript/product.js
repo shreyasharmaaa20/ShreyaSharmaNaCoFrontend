@@ -36,7 +36,14 @@ function addToCart(id, title, price) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
     showCartMessage("Item added to cart!");
+}
+
+// Function to update cart count
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cart-count").innerText = cart.length;
 }
 
 // Function to show cart message 
