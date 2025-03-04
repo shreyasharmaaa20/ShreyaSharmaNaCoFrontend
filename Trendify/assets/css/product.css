@@ -85,6 +85,24 @@ html, body {
     background-color: #218838;
 }
 
+/* Toast Notification */
+.toast-message {
+    position: fixed;
+    top: 20px;
+    right: -300px; /* Initially hidden */
+    background-color: #d32f2f;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: right 0.5s ease-in-out;
+}
+
+.toast-message.show {
+    right: 20px; /* Slides in */
+}
 /* Footer Styling */
 #footer {
     background: #222;
@@ -110,3 +128,4 @@ html, body {
         max-width: 500px;
     }
 }
+
