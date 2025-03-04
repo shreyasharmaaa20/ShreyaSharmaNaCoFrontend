@@ -36,5 +36,25 @@ function addToCart(id, title, price) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Item added to cart!");
+    showCartMessage("Item added to cart!");
 }
+
+// Function to show cart message 
+function showCartMessage(message) {
+    let toast = document.createElement("div");
+    toast.classList.add("toast-message");
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => {
+            toast.remove();
+        }, 500);
+    }, 3000);
+}
+
