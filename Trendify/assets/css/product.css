@@ -167,3 +167,7 @@ html, body {
     }
 }
 
+/* Navbar */
+.navbar-nav {
+    text-align: center;
+}
