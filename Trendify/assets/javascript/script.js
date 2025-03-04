@@ -4,6 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             displayProducts(data);
             setupCategoryFilter(data);
+            
+            // Check URL for product ID and show product detail if present
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get("product");
+            if (productId) {
+                const product = data.find(p => p.id == productId);
+                if (product) {
+                    showProductDetail(product);
+                }
+            }
         })
         .catch(error => console.error("Error fetching products:", error));
 
@@ -34,12 +44,12 @@ function displayProducts(products) {
                 <button class="btn btn-success addToCart">Add to Cart</button>
             </div>`;
 
-        // Attach event listener to product card for details
         productCard.addEventListener("click", function (event) {
             if (!event.target.classList.contains("addToCart")) {
-                showProductDetail(product);
+                window.location.href = `product.html?product=${product.id}`;
             }
         });
+        
 
         // Attach event listener to "Add to Cart" button
         productCard.querySelector(".addToCart").addEventListener("click", function (event) {
@@ -49,36 +59,6 @@ function displayProducts(products) {
 
         productList.appendChild(productCard);
     });
-}
-
-// Function to show product details
-function showProductDetail(product) {
-    let productDetail = document.getElementById("product-detail");
-    let productListSection = document.getElementById("products");
-
-    productDetail.innerHTML = `
-        <div class="container mt-5">
-            <button id="back-to-products" class="btn btn-outline-danger mb-3">← Back to Products</button>
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center">
-                    <img src="${product.image}" alt="${product.title}" class="img-fluid product-img">
-                </div>
-                <div class="col-md-6">
-                    <h2>${product.title}</h2>
-                    <p class="text-muted">${product.category}</p>
-                    <p class="text-danger">$${product.price.toFixed(2)}</p>
-                    <p>${product.description}</p>
-                </div>
-            </div>
-        </div>`;
-
-    document.getElementById("back-to-products").addEventListener("click", () => {
-        productDetail.style.display = "none";
-        productListSection.style.display = "block";
-    });
-
-    productDetail.style.display = "block";
-    productListSection.style.display = "none";
 }
 
 // Function to filter products
